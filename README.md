@@ -11,4 +11,16 @@ An example API for Xyna Factory.
     3. ./xynafactory.sh importapplication -filename /tmp/XynaBlackEdition/components/xfmg/Json.1.3.1.app
     4. ./xynafactory.sh importapplication -filename /tmp/XynaBlackEdition/components/xfmg/OAS_Base.1.4.2.app
 5. Reload GUI
-6. Import XynaPing.yaml
+
+## Import XynaPing Specification and Create Implementation
+
+1. Import XynaPing.yaml via GUI
+2. Create XynaPing_WS Workspace
+3. Set Dependency to Xyna_Ping_Service_Provider App
+4. Create XynaPing_Trigger Instance
+5. Create XynaPing_Filter Instance
+6. First test:
+    > curl localhost:8001/xyna/ping
+7. Create Service Implementation:
+    1. Create Service Datatype "XynaPingApi_Impl" as subtype of ping.provider.XynaPingApi
+
