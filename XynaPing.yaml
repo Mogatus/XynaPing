@@ -1,0 +1,109 @@
+openapi: 3.0.3
+info:
+  title: Xyna Ping Service
+  description: |
+      Services for for testing the availability of the system
+      ### Change History
+      + 17.01.2024 (0.1): Initial Version
+      + 24.01.2024 (0.2): Additional GET version of the service
+      + 20.03.2024 (1.0): New Version
+      + 13.08.2024 (1.1): new x-model-paths
+      + 15.08.2024 (1.2): Workshop Version
+  version: "1.2"
+  x-model-path: ping.datamodel
+  x-provider-path: ping.provider
+  x-client-path: ping.client
+tags:
+- name: XynaPing
+servers:
+- url: https://serverRoot/xyna/
+paths:
+  /ping:
+    get:
+      tags: 
+      - XynaPing
+      summary: Ping Service
+      parameters:
+        - name: input
+          in: query
+          description: Optional Input
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResultObject'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    post:
+      tags: 
+      - XynaPing
+      summary: Ping Service
+      requestBody:
+        description: The specification to be imported with control parameters
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PingBody'
+        required: true
+      responses:
+        '200':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResultObject'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+components:
+  schemas:
+    PingBody:
+      type: object
+      properties:
+        inputStr:
+          type: string
+          description: Just an input body that is used as return value
+    ResultObject:
+      type: object
+      properties:
+        outputStr:
+          type: string
+          description: output object
+    Error:
+      required:
+      - code
+      type: object
+      properties:
+        code:
+          type: string
+          description: HTTP Error Code
+        reason:
+          type: string
+          description: Explanation of the reason for the error which can be shown to a client user.
+        message:
+          type: string
+          description: More details and corrective actions related to the error which can be shown to a client user.
